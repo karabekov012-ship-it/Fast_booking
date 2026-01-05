@@ -92,13 +92,11 @@ class Hotel(Base):
     city: Mapped[City] = relationship(City, back_populates='hotels')
     images: Mapped[List['HotelImage']] = relationship(back_populates='hotel',
                                                        cascade="all, delete-orphan")
-    rooms: Mapped[List[Room]] = relationship(back_populates='hotel_rooms',
+    rooms: Mapped[List['Room']] = relationship(back_populates='hotel_rooms',
                                              cascade="all, delete-orphan")
     hotel_review: Mapped[List['Review']] = relationship(back_populates='hotel_reviews',
                                                         cascade="all, delete-orphan")
-    hotel_room: Mapped[List[Room]] = relationship(back_populates='hotel_rooms',
-                                                        cascade="all, delete-orphan")
-    hotel_booking: Mapped[List[Booking]] = relationship(back_populates='hotel_bookings',
+    hotel_booking: Mapped[List['Booking']] = relationship(back_populates='hotel_bookings',
                                                         cascade="all, delete-orphan")
 
 class HotelImage(Base):
@@ -133,7 +131,7 @@ class Room(Base):
     room_status: Mapped[RoomStatusChoices] = mapped_column(Enum(RoomStatusChoices))
     description: Mapped[str] = mapped_column(Text)
 
-    hotel_rooms: Mapped[Hotel] = relationship(Hotel, back_populates='hotel_room')
+    hotel_rooms: Mapped[Hotel] = relationship(Hotel, back_populates='rooms')
     images: Mapped[List[RoomImage]] = relationship(back_populates='room',
                                                    cascade="all, delete-orphan")
     room_booking: Mapped[List[Booking]] = relationship(back_populates='room_bookings',
